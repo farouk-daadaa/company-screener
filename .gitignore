@@ -1,0 +1,13 @@
+# Backend
+/backend/target/
+*.log
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+
+# Env
+.env
