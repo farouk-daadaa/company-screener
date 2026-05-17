@@ -1,0 +1,9 @@
+INSERT INTO companies (name, sector, country, description, founded_year, employee_count) VALUES
+                                                                                             ('Stripe',       'FinTech',        'USA',           'Online payment infrastructure for the internet.',                          2010, 8000),
+                                                                                             ('Spotify',      'Entertainment',  'Sweden',        'Global music and podcast streaming platform.',                             2006, 9000),
+                                                                                             ('Klarna',       'FinTech',        'Sweden',        'Buy now, pay later and e-commerce payment solutions.',                    2005, 5000),
+                                                                                             ('Jumia',        'E-Commerce',     'Nigeria',       'Pan-African e-commerce platform connecting buyers and sellers.',           2012, 3000),
+                                                                                             ('Doctolib',     'HealthTech',     'France',        'Online medical appointment booking and telehealth platform.',              2013, 2800),
+                                                                                             ('Revolut',      'FinTech',        'UK',            'Digital banking app offering currency exchange and financial services.',   2015, 8000),
+                                                                                             ('UiPath',       'Automation',     'Romania',       'Robotic process automation software for enterprise workflows.',            2005, 4000),
+                                                                                             ('Wise',         'FinTech',        'UK',            'International money transfers with low fees and real exchange rates.',     2011, 3500);
