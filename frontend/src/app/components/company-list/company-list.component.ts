@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 import { CompanyService } from '../../services/company.service';
 import { Company } from '../../models/company.model';
 import { SectorChartComponent } from '../sector-chart/sector-chart.component';
+import { WatchlistComponent } from '../watchlist/watchlist.component';
 
 
 @Component({
   selector: 'app-company-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, SectorChartComponent],  templateUrl: './company-list.component.html',
+  imports: [CommonModule, RouterLink, FormsModule, SectorChartComponent, WatchlistComponent],  templateUrl: './company-list.component.html',
   styleUrl: './company-list.component.css'
 })
 export class CompanyListComponent implements OnInit {

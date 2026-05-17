@@ -5,6 +5,14 @@
 
   <div *ngIf="company() as c">
     <h1>{{ c.name }}</h1>
+    <button
+  class="btn-watch"
+  (click)="watchlistService.isWatched(c.id)
+    ? watchlistService.remove(c.id)
+    : watchlistService.add(c)"
+>
+  {{ watchlistService.isWatched(c.id) ? '★ Remove from Watchlist' : '☆ Add to Watchlist' }}
+</button>
     <div class="badges">
       <span class="badge">{{ c.sector }}</span>
       <span class="badge">{{ c.country }}</span>

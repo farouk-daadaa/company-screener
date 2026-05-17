@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CompanyService } from '../../services/company.service';
 import { Company } from '../../models/company.model';
+import { WatchlistService } from '../../services/watchlist.service';
+
 
 @Component({
   selector: 'app-company-detail',
@@ -22,7 +24,8 @@ export class CompanyDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    public watchlistService: WatchlistService 
   ) {}
 
   ngOnInit() {
