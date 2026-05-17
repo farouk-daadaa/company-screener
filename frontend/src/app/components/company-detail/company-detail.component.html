@@ -1,0 +1,49 @@
+<div class="container">
+  <a routerLink="/" class="back-link">← Back to list</a>
+
+  <div *ngIf="pageError()" class="error">{{ pageError() }}</div>
+
+  <div *ngIf="company() as c">
+    <h1>{{ c.name }}</h1>
+    <div class="badges">
+      <span class="badge">{{ c.sector }}</span>
+      <span class="badge">{{ c.country }}</span>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="label">Founded</span>
+        <span class="value">{{ c.foundedYear }}</span>
+      </div>
+      <div class="info-card">
+        <span class="label">Employees</span>
+        <span class="value">{{ c.employeeCount | number }}</span>
+      </div>
+    </div>
+
+    <p class="description">{{ c.description }}</p>
+
+    <div class="ai-box">
+      <h2>🤖 Ask AI about {{ c.name }}</h2>
+      <div class="ai-input-row">
+        <input
+          type="text"
+          placeholder="e.g. What does this company do?"
+          [ngModel]="question()"
+          (ngModelChange)="question.set($event)"
+          (keyup.enter)="askQuestion()"
+        />
+        <button (click)="askQuestion()" [disabled]="aiLoading()">
+          {{ aiLoading() ? 'Asking...' : 'Ask' }}
+        </button>
+      </div>
+
+      <div *ngIf="aiLoading()" class="ai-loading">⏳ Waiting for AI response...</div>
+      <div *ngIf="aiError()" class="error">{{ aiError() }}</div>
+      <div *ngIf="answer()" class="ai-answer">
+        <strong>Answer:</strong>
+        <p>{{ answer() }}</p>
+      </div>
+    </div>
+  </div>
+</div>
