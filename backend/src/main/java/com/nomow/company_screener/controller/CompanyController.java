@@ -26,9 +26,7 @@ public class CompanyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Company> getCompany(@PathVariable Long id) {
-        return companyService.getCompanyById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(companyService.getCompanyById(id));
     }
 
     @PostMapping("/{id}/ask")
@@ -36,11 +34,8 @@ public class CompanyController {
             @PathVariable Long id,
             @RequestBody Map<String, String> body) {
 
-        return companyService.getCompanyById(id)
-                .map(company -> {
-                    String answer = aiService.ask(company, body.get("question"));
-                    return ResponseEntity.ok(Map.of("answer", answer));
-                })
-                .orElse(ResponseEntity.notFound().build());
+        Company company = companyService.getCompanyById(id);
+        String answer = aiService.ask(company, body.get("question"));
+        return ResponseEntity.ok(Map.of("answer", answer));
     }
 }

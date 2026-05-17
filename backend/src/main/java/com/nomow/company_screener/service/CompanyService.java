@@ -1,6 +1,7 @@
 package com.nomow.company_screener.service;
 
 import com.nomow.company_screener.entity.Company;
+import com.nomow.company_screener.exception.CompanyNotFoundException;
 import com.nomow.company_screener.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,8 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public Optional<Company> getCompanyById(Long id) {
-        return companyRepository.findById(id);
+    public Company getCompanyById(Long id) {
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new CompanyNotFoundException(id));
     }
 }
