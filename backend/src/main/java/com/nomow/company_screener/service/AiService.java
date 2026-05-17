@@ -34,7 +34,7 @@ public class AiService {
         RestClient client = RestClient.create();
 
         Map<String, Object> body = Map.of(
-                "model", "llama3-8b-8192",
+                "model", "llama-3.1-8b-instant",
                 "messages", List.of(Map.of("role", "user", "content", prompt))
         );
 
