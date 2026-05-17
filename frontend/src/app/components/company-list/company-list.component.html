@@ -1,40 +1,88 @@
-<div class="container">
-  <h1>🏢 Company Screener</h1>
+<nav class="topbar">
+  <a class="logo" routerLink="/">
+    <div class="logo-icon">CS</div>
+    Company Screener
+  </a>
+  <button class="watchlist-btn" (click)="scrollToWatchlist()">
+    ⭐ Watchlist
+    <span class="watchlist-badge">{{ watchlistService.companies().length }}</span>
+  </button>
+</nav>
 
-  <input
-    class="search-input"
-    type="text"
-    placeholder="Search by name or sector..."
-    [ngModel]="searchTerm()"
-    (ngModelChange)="searchTerm.set($event)"
-  />
+<div class="page">
+  <div class="hero">
+    <h1>Browse companies</h1>
+    <p>{{ companies().length }} companies across multiple sectors and countries</p>
+  </div>
 
-  <div *ngIf="loading()" class="loading">Loading companies...</div>
-  <div *ngIf="error()" class="error">{{ error() }}</div>
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        placeholder="Search by name or sector..."
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)"
+      />
+    </div>
+    <select class="filter-select"
+      [ngModel]="selectedSector()"
+      (ngModelChange)="selectedSector.set($event)">
+      <option value="">All sectors</option>
+      <option *ngFor="let s of sectors()">{{ s }}</option>
+    </select>
+  </div>
 
-  <table *ngIf="!loading() && !error()">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Sector</th>
-        <th>Country</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let company of filtered()">
-        <td>{{ company.name }}</td>
-        <td>{{ company.sector }}</td>
-        <td>{{ company.country }}</td>
-        <td>
-          <a [routerLink]="['/company', company.id]" class="btn-view">View</a>
-        </td>
-      </tr>
-      <tr *ngIf="filtered().length === 0">
-        <td colspan="4" class="no-results">No companies match your search.</td>
-      </tr>
-    </tbody>
-  </table>
-  <app-sector-chart></app-sector-chart>
-  <app-watchlist></app-watchlist>
+  <div *ngIf="loading()" class="loading-msg">Loading companies...</div>
+  <div *ngIf="error()" class="error-msg">{{ error() }}</div>
+
+  <ng-container *ngIf="!loading() && !error()">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total companies</div>
+        <div class="stat-value">{{ companies().length }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Sectors</div>
+        <div class="stat-value">{{ sectors().length }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Countries</div>
+        <div class="stat-value">{{ countryCount() }}</div>
+      </div>
+    </div>
+
+    <div class="section-title">All companies</div>
+
+    <div class="card-grid">
+      <div class="company-card" *ngFor="let c of filtered()">
+        <div class="card-top">
+          <div class="company-avatar" [ngStyle]="avatarStyle(c.sector)">
+            {{ initials(c.name) }}
+          </div>
+          <button
+            class="star-btn"
+            [class.watched]="watchlistService.isWatched(c.id)"
+            (click)="toggleWatch(c)"
+            [attr.aria-label]="watchlistService.isWatched(c.id) ? 'Remove from watchlist' : 'Add to watchlist'">
+            {{ watchlistService.isWatched(c.id) ? '★' : '☆' }}
+          </button>
+        </div>
+        <div class="company-name">{{ c.name }}</div>
+        <div class="company-country">📍 {{ c.country }}</div>
+        <span class="sector-pill" [ngStyle]="pillStyle(c.sector)">{{ c.sector }}</span>
+        <a class="view-link" [routerLink]="['/company', c.id]">→ View details</a>
+      </div>
+
+      <div class="no-results" *ngIf="filtered().length === 0">
+        No companies match your search.
+      </div>
+    </div>
+
+    <app-sector-chart></app-sector-chart>
+
+    <div style="margin-top: 24px" id="watchlist-section">
+      <app-watchlist></app-watchlist>
+    </div>
+  </ng-container>
 </div>
